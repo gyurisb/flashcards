@@ -1,0 +1,1 @@
+Ide fog jönni az android kliens eclipse projektje.

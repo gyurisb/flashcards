@@ -1,0 +1,16 @@
+2015-11-28 16:45:40.9614,Info,LoggingHandler registered
+2015-11-28 16:48:51.6760,Info,LoggingHandler registered
+2015-11-29 16:41:50.9251,Info,LoggingHandler registered
+2015-11-29 16:43:30.8495,Info,LoggingHandler registered
+2015-11-29 16:43:49.8437,Info,LoggingHandler registered
+2015-11-29 16:44:40.6867,Info,LoggingHandler registered
+2015-11-29 16:44:57.6243,Info,LoggingHandler registered
+2015-11-29 16:45:55.4486,Info,LoggingHandler registered
+2015-11-29 16:49:56.7309,Info,LoggingHandler registered
+2015-11-29 16:52:25.5100,Info,LoggingHandler registered
+2015-11-29 16:53:19.1715,Info,LoggingHandler registered
+2015-11-29 16:53:44.8197,Info,LoggingHandler registered
+2015-11-29 16:55:49.8239,Info,LoggingHandler registered
+2015-11-29 16:57:09.5892,Info,LoggingHandler registered
+2015-11-29 16:57:43.8042,Info,LoggingHandler registered
+2015-11-29 21:16:43.5715,Info,LoggingHandler registered

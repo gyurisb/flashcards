@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.wordcardapp"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-sdk
+        android:minSdkVersion="16"
+        android:targetSdkVersion="19" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme" >
+        <activity
+            android:name=".LoginActivity"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <!-- Accepts URIs that begin with the given host+pathPrefix -->
+                <data
+                    android:host="testweb-gyurisb.azurewebsites.net"
+                    android:pathPrefix="/categories"
+                    android:scheme="https" />
+			</intent-filter>
+        </activity>
+        <activity
+            android:name=".RegisterUserActivity"
+            android:label="@string/title_activity_register_user" >
+        </activity>
+        <activity
+            android:name=".MenuActivity"
+            android:label="@string/title_activity_menu" >
+        </activity>
+        <activity
+            android:name=".PlayCardsActivity"
+            android:label="@string/title_activity_play_cards" >
+        </activity>
+        <activity
+            android:name=".CardGameActivity"
+            android:label="@string/title_activity_card_game" >
+        </activity>
+        <activity
+            android:name=".CategoriesActivity"
+            android:label="@string/title_activity_categories" >
+        </activity>
+        <activity
+            android:name=".CardListActivity"
+            android:label="@string/title_activity_card_list" >
+        </activity>
+    </application>
+
+</manifest>

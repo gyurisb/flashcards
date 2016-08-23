@@ -1,0 +1,295 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="FlashCardServer.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="FlashCardServerStoreContainer">
+    <EntitySet Name="AspNetUsers" EntityType="FlashCardServer.Store.AspNetUsers" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Categories" EntityType="FlashCardServer.Store.Categories" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="FlashCards" EntityType="FlashCardServer.Store.FlashCards" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Shares" EntityType="FlashCardServer.Store.Shares" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="CategoryFlashCard" Association="FlashCardServer.Store.CategoryFlashCard">
+      <End Role="Category" EntitySet="Categories" />
+      <End Role="FlashCard" EntitySet="FlashCards" />
+    </AssociationSet>
+    <AssociationSet Name="AspNetUserCategory" Association="FlashCardServer.Store.AspNetUserCategory">
+      <End Role="AspNetUser" EntitySet="AspNetUsers" />
+      <End Role="Category" EntitySet="Categories" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Shares_AspNetUser" Association="FlashCardServer.Store.FK_Shares_AspNetUser">
+      <End Role="AspNetUser" EntitySet="AspNetUsers" />
+      <End Role="Shares" EntitySet="Shares" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Shares_Category" Association="FlashCardServer.Store.FK_Shares_Category">
+      <End Role="Category" EntitySet="Categories" />
+      <End Role="Shares" EntitySet="Shares" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="AspNetUsers">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="nvarchar" Nullable="false" MaxLength="128" />
+    <Property Name="DisplayName" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="Email" Type="nvarchar" Nullable="true" MaxLength="256" />
+    <Property Name="EmailConfirmed" Type="bit" Nullable="false" />
+    <Property Name="PasswordHash" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="SecurityStamp" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="PhoneNumber" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="PhoneNumberConfirmed" Type="bit" Nullable="false" />
+    <Property Name="TwoFactorEnabled" Type="bit" Nullable="false" />
+    <Property Name="LockoutEndDateUtc" Type="datetime" Nullable="true" />
+    <Property Name="LockoutEnabled" Type="bit" Nullable="false" />
+    <Property Name="AccessFailedCount" Type="int" Nullable="false" />
+    <Property Name="UserName" Type="nvarchar" Nullable="false" MaxLength="256" />
+  </EntityType>
+  <EntityType Name="Categories">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Language" Type="char" Nullable="true" MaxLength="2" />
+    <Property Name="IsPublic" Type="bit" Nullable="false" />
+    <Property Name="UserID" Type="nvarchar" Nullable="false" MaxLength="128" />
+  </EntityType>
+  <EntityType Name="FlashCards">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CategoryID" Type="int" Nullable="false" />
+    <Property Name="Front" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Back" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Language" Type="char" Nullable="false" MaxLength="2" />
+  </EntityType>
+  <EntityType Name="Shares">
+    <Key>
+      <PropertyRef Name="SharedUsers_Id" />
+      <PropertyRef Name="SharedCategories_ID" />
+    </Key>
+    <Property Name="SharedUsers_Id" Type="nvarchar" Nullable="false" MaxLength="128" />
+    <Property Name="SharedCategories_ID" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="CategoryFlashCard">
+    <End Role="Category" Type="FlashCardServer.Store.Categories" Multiplicity="1" />
+    <End Role="FlashCard" Type="FlashCardServer.Store.FlashCards" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Category">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="FlashCard">
+        <PropertyRef Name="CategoryID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="AspNetUserCategory">
+    <End Role="AspNetUser" Type="FlashCardServer.Store.AspNetUsers" Multiplicity="1" />
+    <End Role="Category" Type="FlashCardServer.Store.Categories" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUser">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Category">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Shares_AspNetUser">
+    <End Role="AspNetUser" Type="FlashCardServer.Store.AspNetUsers" Multiplicity="1" />
+    <End Role="Shares" Type="FlashCardServer.Store.Shares" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUser">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Shares">
+        <PropertyRef Name="SharedUsers_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Shares_Category">
+    <End Role="Shares" Type="FlashCardServer.Store.Shares" Multiplicity="*" />
+    <End Role="Category" Type="FlashCardServer.Store.Categories" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Category">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Shares">
+        <PropertyRef Name="SharedCategories_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="FlashCardServer" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
+        <EntityContainer Name="FlashCardContext" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="AspNetUsers" EntityType="FlashCardServer.AspNetUser" />
+          <EntitySet Name="Categories" EntityType="FlashCardServer.Category" />
+          <EntitySet Name="FlashCards" EntityType="FlashCardServer.FlashCard" />
+          <AssociationSet Name="CategoryFlashCard" Association="FlashCardServer.CategoryFlashCard">
+            <End Role="Category" EntitySet="Categories" />
+            <End Role="FlashCard" EntitySet="FlashCards" />
+          </AssociationSet>
+          <AssociationSet Name="AspNetUserCategory" Association="FlashCardServer.AspNetUserCategory">
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+            <End Role="Category" EntitySet="Categories" />
+          </AssociationSet>
+          <AssociationSet Name="Shares" Association="FlashCardServer.Shares">
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+            <End Role="Category" EntitySet="Categories" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="AspNetUser">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="DisplayName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="EmailConfirmed" Type="Boolean" Nullable="false" />
+          <Property Name="PasswordHash" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="SecurityStamp" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumberConfirmed" Type="Boolean" Nullable="false" />
+          <Property Name="TwoFactorEnabled" Type="Boolean" Nullable="false" />
+          <Property Name="LockoutEndDateUtc" Type="DateTime" Precision="3" />
+          <Property Name="LockoutEnabled" Type="Boolean" Nullable="false" />
+          <Property Name="AccessFailedCount" Type="Int32" Nullable="false" />
+          <Property Name="UserName" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Categories" Relationship="FlashCardServer.AspNetUserCategory" FromRole="AspNetUser" ToRole="Category" />
+          <NavigationProperty Name="SharedCategories" Relationship="FlashCardServer.Shares" FromRole="AspNetUser" ToRole="Category" />
+        </EntityType>
+        <EntityType Name="Category">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="FlashCards" Relationship="FlashCardServer.CategoryFlashCard" FromRole="Category" ToRole="FlashCard" />
+          <Property Name="Name" Type="String" Nullable="false" />
+          <Property Name="Language" Type="String" Nullable="true" FixedLength="true" MaxLength="2" Unicode="false" />
+          <Property Name="IsPublic" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="User" Relationship="FlashCardServer.AspNetUserCategory" FromRole="Category" ToRole="AspNetUser" />
+          <Property Name="UserID" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="SharedUsers" Relationship="FlashCardServer.Shares" FromRole="Category" ToRole="AspNetUser" />
+        </EntityType>
+        <EntityType Name="FlashCard">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Category" Relationship="FlashCardServer.CategoryFlashCard" FromRole="FlashCard" ToRole="Category" />
+          <Property Name="CategoryID" Type="Int32" Nullable="false" />
+          <Property Name="Front" Type="String" Nullable="false" />
+          <Property Name="Back" Type="String" Nullable="false" />
+          <Property Name="Language" Type="String" Nullable="false" FixedLength="true" MaxLength="2" Unicode="false" />
+        </EntityType>
+        <Association Name="CategoryFlashCard">
+          <End Type="FlashCardServer.Category" Role="Category" Multiplicity="1" />
+          <End Type="FlashCardServer.FlashCard" Role="FlashCard" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="FlashCard">
+              <PropertyRef Name="CategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="AspNetUserCategory">
+          <End Type="FlashCardServer.AspNetUser" Role="AspNetUser" Multiplicity="1" />
+          <End Type="FlashCardServer.Category" Role="Category" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Category">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Shares">
+          <End Type="FlashCardServer.AspNetUser" Role="AspNetUser" Multiplicity="*" />
+          <End Type="FlashCardServer.Category" Role="Category" Multiplicity="*" />
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="FlashCardServerStoreContainer" CdmEntityContainer="FlashCardContext">
+    <EntitySetMapping Name="AspNetUsers">
+      <EntityTypeMapping TypeName="IsTypeOf(FlashCardServer.AspNetUser)">
+        <MappingFragment StoreEntitySet="AspNetUsers">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="DisplayName" ColumnName="DisplayName" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="EmailConfirmed" ColumnName="EmailConfirmed" />
+          <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
+          <ScalarProperty Name="SecurityStamp" ColumnName="SecurityStamp" />
+          <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+          <ScalarProperty Name="PhoneNumberConfirmed" ColumnName="PhoneNumberConfirmed" />
+          <ScalarProperty Name="TwoFactorEnabled" ColumnName="TwoFactorEnabled" />
+          <ScalarProperty Name="LockoutEndDateUtc" ColumnName="LockoutEndDateUtc" />
+          <ScalarProperty Name="LockoutEnabled" ColumnName="LockoutEnabled" />
+          <ScalarProperty Name="AccessFailedCount" ColumnName="AccessFailedCount" />
+          <ScalarProperty Name="UserName" ColumnName="UserName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Categories">
+      <EntityTypeMapping TypeName="IsTypeOf(FlashCardServer.Category)">
+        <MappingFragment StoreEntitySet="Categories">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Language" ColumnName="Language" />
+          <ScalarProperty Name="IsPublic" ColumnName="IsPublic" />
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="FlashCards">
+      <EntityTypeMapping TypeName="IsTypeOf(FlashCardServer.FlashCard)">
+        <MappingFragment StoreEntitySet="FlashCards">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
+          <ScalarProperty Name="Front" ColumnName="Front" />
+          <ScalarProperty Name="Back" ColumnName="Back" />
+          <ScalarProperty Name="Language" ColumnName="Language" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="Shares" TypeName="FlashCardServer.Shares" StoreEntitySet="Shares">
+      <EndProperty Name="AspNetUser">
+        <ScalarProperty Name="Id" ColumnName="SharedUsers_Id" />
+      </EndProperty>
+      <EndProperty Name="Category">
+        <ScalarProperty Name="ID" ColumnName="SharedCategories_ID" />
+      </EndProperty>
+    </AssociationSetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <edmx:Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </edmx:Connection>
+    <edmx:Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+        <DesignerProperty Name="UseLegacyProvider" Value="False" />
+      </DesignerInfoPropertySet>
+    </edmx:Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
